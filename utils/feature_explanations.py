@@ -139,11 +139,22 @@ feature_explanations = {
     "Has Dependents": lambda c:
         "Customer does not have dependents.",
 
-    "Multiple Lines": lambda c: (
+    "Multiple Lines": lambda c:( 
     "Customer has multiple phone lines."
     if c["Multiple Lines"] == "Yes"
-    else "Customer does not have multiple phone lines."
-)
+    else "Customer does not have multiple phone lines."),
+
+    "Online Security": lambda c:
+    "Customer has subscribed to Online Security.",
+
+    "Online Backup": lambda c:
+        "Customer has subscribed to Online Backup.",
+
+    "Device Protection": lambda c:
+        "Customer has subscribed to Device Protection.",
+
+    "Tech Support": lambda c:
+        "Customer has subscribed to Tech Support.",
 }
 
 
