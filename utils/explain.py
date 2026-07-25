@@ -25,21 +25,21 @@ def explain_prediction(customer):
 
     protective = get_top_protective_factors(importance)
 
-    # Readable explanations
-    risk = generate_feature_explanations(
-        customer.iloc[0],
-        risk
+    risk_for_recommendation = risk.copy()
+
+    recommendations = generate_recommendations(
+        prediction["probability"],
+        risk_for_recommendation
     )
 
+    risk = generate_feature_explanations(
+            customer.iloc[0],
+            risk
+    )
+    
     protective = generate_feature_explanations(
         customer.iloc[0],
         protective
-    )
-
-    # Recommendations
-    recommendations = generate_recommendations(
-        prediction["probability"],
-        risk
     )
 
     return {

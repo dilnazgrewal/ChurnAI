@@ -44,10 +44,12 @@ def predict_customer(customer_df):
         else "Not Likely to Churn"
     )
 
+    display_probability = round(float(probability) * 100, 2)
+
     risk_level = get_risk_level(probability)
 
     return {
         "prediction": prediction,
-        "probability": float(probability),
+        "probability": display_probability,
         "risk_level": risk_level
     }

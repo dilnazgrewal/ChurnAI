@@ -1,8 +1,51 @@
-feature_explanations = {
+display_feature_names = {
 
-    # =========================
-    # Numeric Features
-    # =========================
+    # Internet Service
+    "DSL Internet": "Internet Service",
+    "Fiber Optic Internet": "Internet Service",
+    "No Internet Service": "Internet Service",
+
+    # Contract
+    "Month-to-Month Contract": "Contract",
+    "One-Year Contract": "Contract",
+    "Two-Year Contract": "Contract",
+
+    # Payment
+    "Electronic Check": "Payment Method",
+    "Bank Transfer": "Payment Method",
+    "Credit Card": "Payment Method",
+    "Mailed Check": "Payment Method",
+
+    # Partner
+    "Has Partner": "Partner",
+    "No Partner": "Partner",
+
+    # Dependents
+    "Has Dependents": "Dependents",
+    "No Dependents": "Dependents",
+
+    # Multiple Lines
+    "Multiple Lines": "Multiple Lines",
+    "No Multiple Lines": "Multiple Lines",
+
+    # Online Security
+    "Online Security": "Online Security",
+    "No Online Security": "Online Security",
+
+    # Tech Support
+    "Tech Support": "Tech Support",
+    "No Tech Support": "Tech Support",
+
+    # Online Backup
+    "Online Backup": "Online Backup",
+    "No Online Backup": "Online Backup",
+
+    # Device Protection
+    "Device Protection": "Device Protection",
+    "No Device Protection": "Device Protection",
+}
+
+feature_explanations = {
 
     "Customer Tenure": lambda c:
         f"Customer has been with the company for {int(c['Tenure Months'])} months.",
@@ -11,20 +54,19 @@ feature_explanations = {
         f"Customer pays ${c['Monthly Charges']:.2f} per month.",
 
     "Total Charges": lambda c:
-        f"Customer has spent a total of ${c['Total Charges']:.2f}.",
+        f"Customer has spent a total of ${c['Total Charges']:.2f}, which help reduce the predicted churn risk.",
 
     "Average Monthly Spend": lambda c:
         f"Customer spends an average of ${c['Avg Monthly Spend']:.2f} per month.",
 
-    "Total Services": lambda c:
-        f"Customer subscribes to {int(c['Total Services'])} services.",
+    "Total Services": lambda c: (
+    f"Customer subscribes to "
+    f"{int(c['Total Services'])} "
+    f"{'service' if int(c['Total Services']) == 1 else 'services'}."
+    ),
 
     "Services per Month": lambda c:
         f"Customer has {c['Services_per_Month']:.2f} services per month of tenure.",
-
-    # =========================
-    # Customer Segments
-    # =========================
 
     "New Customer": lambda c:
         "Customer is relatively new.",
@@ -35,19 +77,11 @@ feature_explanations = {
     "High Value Customer": lambda c:
         "Customer belongs to the high-value customer segment.",
 
-    # =========================
-    # Bundles
-    # =========================
-
     "Security Bundle": lambda c:
         "Customer has subscribed to multiple security-related services.",
 
     "Entertainment Bundle": lambda c:
         "Customer has subscribed to multiple entertainment services.",
-
-    # =========================
-    # Contract
-    # =========================
 
     "Month-to-Month Contract": lambda c:
         "Customer is on a Month-to-Month contract.",
@@ -58,22 +92,22 @@ feature_explanations = {
     "Two-Year Contract": lambda c:
         "Customer is not on a Two-Year contract.",
 
-    # =========================
-    # Internet
-    # =========================
-
     "Fiber Optic Internet": lambda c:
-        "Customer uses Fiber Optic Internet.",
+    (
+        "Customer uses Fiber Optic Internet."
+        if c["Internet Service"] == "Fiber Optic"
+        else "Customer does not use Fiber Optic Internet."
+    ),
 
     "DSL Internet": lambda c:
-        "Customer uses DSL Internet.",
+    (
+        "Customer uses DSL Internet."
+        if c["Internet Service"] == "Dsl"
+        else "The customer uses Fiber Optic Internet, which contributes to the predicted churn risk."
+    ),
 
     "No Internet Service": lambda c:
         "Customer does not have an Internet service subscription.",
-
-    # =========================
-    # Additional Services
-    # =========================
 
     "No Online Security": lambda c:
         "Customer has not subscribed to Online Security.",
@@ -93,25 +127,23 @@ feature_explanations = {
     "Streaming Movies": lambda c:
         "Customer subscribes to Streaming Movies.",
 
-    # =========================
-    # Billing
-    # =========================
-
     "Electronic Check": lambda c:
         "Customer pays using Electronic Check.",
 
     "Paperless Billing Enabled": lambda c:
         "Customer uses Paperless Billing.",
 
-    # =========================
-    # Family
-    # =========================
-
     "No Partner": lambda c:
         "Customer does not have a partner.",
 
     "Has Dependents": lambda c:
-        "Customer does not have dependents."
+        "Customer does not have dependents.",
+
+    "Multiple Lines": lambda c: (
+    "Customer has multiple phone lines."
+    if c["Multiple Lines"] == "Yes"
+    else "Customer does not have multiple phone lines."
+)
 }
 
 
@@ -149,4 +181,15 @@ def generate_feature_explanations(customer, factors):
         axis=1
     )
 
+    factors["Feature"] = factors["Feature"].map(
+    lambda x: display_feature_names.get(x, x)
+    )
+
+    factors = (
+    factors
+    .sort_values("Absolute SHAP", ascending=False)
+    .drop_duplicates(subset="Feature")
+    .reset_index(drop=True)
+    )
+    
     return factors

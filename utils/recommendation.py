@@ -7,12 +7,12 @@ def generate_recommendations(churn_probability, risk_factors):
     recommendations = []
 
     # Overall recommendation
-    if churn_probability >= 0.70:
+    if churn_probability >= 70:
         recommendations.append(
             "Prioritize this customer for immediate retention outreach."
         )
 
-    elif churn_probability >= 0.40:
+    elif churn_probability >= 40:
         recommendations.append(
             "Monitor this customer closely and consider a targeted retention offer."
         )
