@@ -1,7 +1,7 @@
 import shap
 import pandas as pd
 
-from loader import (
+from .loader import (
     load_pipeline,
     load_shap_background,
     load_readable_feature_names

@@ -1,4 +1,4 @@
-from loader import load_pipeline, load_threshold
+from .loader import load_pipeline, load_threshold
 
 pipeline = load_pipeline()
 threshold = load_threshold()

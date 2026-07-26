@@ -24,7 +24,7 @@ def apply(page_title=""):
     """Call first on every page. Sets config, reads the theme, injects CSS.
     Returns (c, theme)."""
     st.set_page_config(
-        page_title=page_title or "AI Churn Intelligence",
+        page_title=page_title or "ChurnAI",
         page_icon="🧠",
         layout="wide",
         initial_sidebar_state="collapsed",
@@ -47,7 +47,7 @@ def apply(page_title=""):
 
         html, body, [class*="css"] {{ font-family: 'Poppins', sans-serif; }}
 
-        .stApp {{ background: {c['bg']}; }}
+        .stApp {{ background: {c['bg']}; color: {c['title']}; }}
         [data-testid="stHeaderActionElements"] {{ display: none; }}
         header[data-testid="stHeader"] {{ background: transparent; }}
         #MainMenu, footer {{ visibility: hidden; }}
@@ -126,6 +126,79 @@ def apply(page_title=""):
             align-items:center; justify-content:center; font-size:1.45rem; background:rgba(37,99,235,.14); }}
         .req-tile .rt-title {{ color:{c['title']}; font-weight:700; font-size:1.08rem; margin-bottom:.2rem; }}
         .req-tile .rt-sub {{ color:{c['sub']}; font-size:.92rem; line-height:1.5; }}
+
+        /* ---- form widgets (force widgets to follow the theme, not the dark config) ---- */
+        .stApp {{ --background-color:{c['bg']}; --secondary-background-color:{c['card_bg']}; --text-color:{c['title']}; }}
+        [data-testid="stForm"] {{ background:{c['card_bg']}; border:1px solid {c['card_border']};
+            border-radius:16px; padding:1.6rem 1.6rem .8rem; }}
+        [data-testid="stWidgetLabel"] p, [data-testid="stForm"] label p {{
+            color:{c['title']} !important; font-weight:600; font-size:.92rem; }}
+
+        /* text, number & select fields — force to theme via stable testids */
+        [data-testid="stSelectbox"] div, [data-testid="stNumberInput"] div, [data-testid="stTextInput"] div {{
+            background-color:{c['bg']} !important; border-color:{c['card_border']} !important; }}
+        [data-testid="stSelectbox"] *, [data-testid="stNumberInput"] *, [data-testid="stTextInput"] * {{
+            color:{c['title']} !important; }}
+        [data-testid="stSelectbox"] input, [data-testid="stNumberInput"] input, [data-testid="stTextInput"] input {{
+            background:transparent !important; color:{c['title']} !important; }}
+        [data-testid="stSelectbox"] svg, [data-testid="stNumberInput"] svg {{ fill:{c['sub']} !important; }}
+        [data-testid="stWidgetLabel"] p {{ color:{c['title']} !important; font-size:1.05rem !important; font-weight:600 !important; }}
+
+        /* number-input stepper buttons (override the generic div rule above) */
+        [data-testid="stNumberInputStepUp"], [data-testid="stNumberInputStepDown"] {{
+            background:{c['card_bg']} !important; border-color:{c['card_border']} !important; }}
+        [data-testid="stNumberInputStepUp"] svg, [data-testid="stNumberInputStepDown"] svg {{
+            fill:{c['title']} !important; }}
+        [data-testid="stNumberInputStepUp"]:hover, [data-testid="stNumberInputStepDown"]:hover {{
+            background:rgba(37,99,235,.18) !important; }}
+
+        /* dropdown popover (rendered outside the widget) */
+        [data-baseweb="popover"] [role="listbox"] {{ background:{c['card_bg']} !important; border:1px solid {c['card_border']}; }}
+        [data-baseweb="popover"] li {{ color:{c['title']} !important; background:{c['card_bg']} !important; }}
+        [data-baseweb="popover"] li:hover {{ background:rgba(37,99,235,.15) !important; }}
+
+        /* expanders (fix dark header bar) */
+        [data-testid="stExpander"] {{ border:1px solid {c['card_border']} !important; border-radius:12px !important;
+            overflow:hidden; margin-bottom:.9rem; }}
+        [data-testid="stExpander"] details {{ background:{c['card_bg']} !important; }}
+        [data-testid="stExpander"] summary {{ background:{c['card_bg']} !important; color:{c['title']} !important;
+            font-weight:700 !important; font-size:1.2rem !important; padding:.4rem 0 !important; }}
+        [data-testid="stExpander"] summary * {{ color:{c['title']} !important; }}
+        [data-testid="stExpander"] summary:hover, [data-testid="stExpander"] summary:hover * {{ color:#2563eb !important; }}
+
+        /* submit button */
+        [data-testid="stFormSubmitButton"] button {{ background:#2563eb !important; color:#fff !important;
+            border:none !important; font-weight:700 !important; padding:.85rem 2rem !important;
+            border-radius:8px !important; transition:background .2s; }}
+        [data-testid="stFormSubmitButton"] button:hover {{ background:#1d4ed8 !important; }}
+
+        /* ---- prediction result ---- */
+        .result-eyebrow {{ font-size:.78rem; letter-spacing:1.5px; text-transform:uppercase; color:{c['sub']}; font-weight:600; }}
+        .result-card {{ background:{c['card_bg']}; border:1px solid {c['card_border']}; border-radius:18px;
+            padding:2rem; position:relative; overflow:hidden; box-shadow:0 18px 40px rgba(0,0,0,.22); margin-bottom:1.4rem; }}
+        .result-verdict {{ font-size:2.3rem; font-weight:800; line-height:1.1; margin:.5rem 0 .35rem; }}
+        .result-sub {{ color:{c['sub']}; font-size:1.02rem; }}
+        .result-sub b {{ color:{c['title']}; }}
+        .result-prob {{ font-size:3.1rem; font-weight:800; line-height:1; }}
+        .result-prob-label {{ color:{c['sub']}; font-size:.82rem; text-transform:uppercase; letter-spacing:.6px; margin-top:.25rem; }}
+        .result-bar {{ background:{c['card_border']}; height:12px; border-radius:999px; margin-top:1.7rem; overflow:hidden; }}
+        .result-bar > div {{ height:100%; border-radius:999px; }}
+
+        .f-card {{ background:{c['card_bg']}; border:1px solid {c['card_border']}; border-radius:16px; padding:1.6rem; height:100%; }}
+        .f-card h4 {{ font-size:1.12rem; font-weight:700; color:{c['title']}; margin:0 0 1rem; }}
+        .f-row {{ display:flex; gap:.7rem; align-items:flex-start; padding:.6rem 0; color:{c['sub']};
+            font-size:.98rem; line-height:1.5; border-top:1px solid {c['card_border']}; }}
+        .f-row:first-of-type {{ border-top:none; padding-top:0; }}
+        .f-row .mk {{ flex:0 0 auto; font-weight:800; margin-top:.05rem; }}
+        .f-risk .mk {{ color:#ef4444; }}
+        .f-safe .mk {{ color:#22c55e; }}
+
+        .rec-card {{ background:rgba(37,99,235,.08); border:1px solid rgba(37,99,235,.28); border-radius:16px;
+            padding:1.6rem 1.8rem; margin-top:1.4rem; }}
+        .rec-card h4 {{ font-size:1.15rem; font-weight:700; color:{c['title']}; margin:0 0 1rem; }}
+        .rec-item {{ display:flex; gap:.8rem; align-items:flex-start; padding:.5rem 0;
+            color:{c['title']}; font-size:1rem; line-height:1.55; }}
+        .rec-item .arw {{ color:#3b82f6; font-weight:800; flex:0 0 auto; }}
         </style>
         """,
         unsafe_allow_html=True,
@@ -143,7 +216,7 @@ def nav(active, c, theme):
     st.markdown(
         f"""
         <div class="navbar">
-            <div class="brand">AI Churn Intelligence</div>
+            <div class="brand">ChurnAI</div>
             <div class="navlinks">
                 <a href="/?theme={theme}"{cls('Home')} target="_self">Home</a>
                 <a href="/Prediction?theme={theme}"{cls('Prediction')} target="_self">Prediction</a>

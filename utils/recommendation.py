@@ -35,7 +35,7 @@ def generate_recommendations(churn_probability, risk_factors):
                 "Review pricing and consider personalized discounts or value-added services."
             )
 
-        elif feature == "Average Monthly Spend":
+        elif feature == "Avg Monthly Spend":
             recommendations.append(
                 "Evaluate whether the customer is receiving sufficient value for their monthly spending."
             )
@@ -43,6 +43,16 @@ def generate_recommendations(churn_probability, risk_factors):
         elif feature == "No Online Security":
             recommendations.append(
                 "Recommend an Online Security add-on to increase service value."
+            )
+
+        elif feature == "No Online Backup":
+            recommendations.append(
+                "Recommend an Online Backup add-on to increase service value."
+            )
+
+        elif feature == "No Device Protection":
+            recommendations.append(
+                "Offer a Device Protection plan, especially if the customer has multiple connected devices."
             )
 
         elif feature == "No Tech Support":
@@ -53,6 +63,16 @@ def generate_recommendations(churn_probability, risk_factors):
         elif feature == "Fiber Optic Internet":
             recommendations.append(
                 "Review service quality and pricing for the customer's Fiber Optic plan."
+            )
+
+        elif feature == "DSL Internet":
+            recommendations.append(
+                "Check whether upgrading to Fiber Optic would better meet the customer's needs."
+            )
+
+        elif feature == "No Internet Service":
+            recommendations.append(
+                "Explore whether an internet bundle would add value for this customer."
             )
 
         elif feature == "Electronic Check":
@@ -70,6 +90,11 @@ def generate_recommendations(churn_probability, risk_factors):
                 "Provide personalized offers that focus on individual customer value."
             )
 
+        elif feature == "Multiple Lines":
+            recommendations.append(
+                "Offer a multi-line discount to reinforce the value of staying on the account."
+            )
+
         elif feature == "Streaming TV":
             recommendations.append(
                 "Bundle entertainment services to improve perceived value."
@@ -83,6 +108,26 @@ def generate_recommendations(churn_probability, risk_factors):
         elif feature == "Entertainment Bundle":
             recommendations.append(
                 "Review whether the customer's entertainment package is meeting their expectations."
+            )
+
+        elif feature == "Security Bundle":
+            recommendations.append(
+                "Highlight the value of the customer's security services in retention conversations."
+            )
+
+        elif feature == "Total Services":
+            recommendations.append(
+                "Review the customer's overall bundle cost and consider a loyalty discount for high-usage accounts."
+            )
+
+        elif feature == "Customer Tenure":
+            recommendations.append(
+                "Enroll the customer in an early-tenure check-in or onboarding program to build engagement."
+            )
+
+        elif feature == "Total Charges":
+            recommendations.append(
+                "Consider a welcome offer to reinforce value early in the customer relationship."
             )
 
     # Remove duplicates while preserving order

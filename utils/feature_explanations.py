@@ -51,12 +51,14 @@ feature_explanations = {
         f"Customer has been with the company for {int(c['Tenure Months'])} months.",
 
     "Monthly Charges": lambda c:
-        f"Customer pays ${c['Monthly Charges']:.2f} per month.",
+        f"Customer pays ${c['Monthly Charges']:.2f} per month, "
+        f"{'above' if c['High_Value'] else 'at or below'} the typical customer's monthly spend.",
 
     "Total Charges": lambda c:
-        f"Customer has spent a total of ${c['Total Charges']:.2f}, which help reduce the predicted churn risk.",
+        f"Customer has spent a total of ${c['Total Charges']:.2f} over "
+        f"{int(c['Tenure Months'])} months (avg ${c['Avg Monthly Spend']:.2f}/month).",
 
-    "Average Monthly Spend": lambda c:
+    "Avg Monthly Spend": lambda c:
         f"Customer spends an average of ${c['Avg Monthly Spend']:.2f} per month.",
 
     "Total Services": lambda c: (
@@ -103,7 +105,7 @@ feature_explanations = {
     (
         "Customer uses DSL Internet."
         if c["Internet Service"] == "Dsl"
-        else "The customer uses Fiber Optic Internet, which contributes to the predicted churn risk."
+        else "Customer does not use DSL Internet."
     ),
 
     "No Internet Service": lambda c:
@@ -137,7 +139,7 @@ feature_explanations = {
         "Customer does not have a partner.",
 
     "Has Dependents": lambda c:
-        "Customer does not have dependents.",
+        "Customer has dependents.",
 
     "Multiple Lines": lambda c:( 
     "Customer has multiple phone lines."
