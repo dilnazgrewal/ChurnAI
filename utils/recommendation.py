@@ -80,15 +80,6 @@ def generate_recommendations(churn_probability, risk_factors):
                 "Encourage switching to automatic payments through a small billing incentive."
             )
 
-        elif feature == "Has Dependents":
-            recommendations.append(
-                "Consider personalized retention offers tailored to the customer's household needs."
-            )
-
-        elif feature == "No Partner":
-            recommendations.append(
-                "Provide personalized offers that focus on individual customer value."
-            )
 
         elif feature == "Multiple Lines":
             recommendations.append(
@@ -117,7 +108,7 @@ def generate_recommendations(churn_probability, risk_factors):
 
         elif feature == "Total Services":
             recommendations.append(
-                "Review the customer's overall bundle cost and consider a loyalty discount for high-usage accounts."
+                "Review whether adding or optimizing services would increase perceived value."
             )
 
         elif feature == "Customer Tenure":
@@ -125,10 +116,6 @@ def generate_recommendations(churn_probability, risk_factors):
                 "Enroll the customer in an early-tenure check-in or onboarding program to build engagement."
             )
 
-        elif feature == "Total Charges":
-            recommendations.append(
-                "Consider a welcome offer to reinforce value early in the customer relationship."
-            )
 
     # Remove duplicates while preserving order
     recommendations = list(dict.fromkeys(recommendations))

@@ -54,36 +54,3 @@ def get_feature_importance(shap_values):
     )
 
     return importance
-
-HIDDEN_FEATURES = {
-    "Services per Month",
-    "Security Bundle",
-    "Entertainment Bundle",
-    "High Value Customer",
-    "Long-Term Customer"
-}
-
-def get_top_risk_factors(importance, top_n=5):
-
-    importance = importance[
-        ~importance["Feature"].isin(HIDDEN_FEATURES)
-    ]
-
-    return (
-        importance[importance["SHAP Value"] > 0]
-        .sort_values("SHAP Value", ascending=False)
-        .head(top_n)
-    )
-
-
-def get_top_protective_factors(importance, top_n=5):
-
-    importance = importance[
-        ~importance["Feature"].isin(HIDDEN_FEATURES)
-    ]
-
-    return (
-        importance[importance["SHAP Value"] < 0]
-        .sort_values("SHAP Value")
-        .head(top_n)
-    )

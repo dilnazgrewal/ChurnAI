@@ -96,16 +96,16 @@ feature_explanations = {
 
     "Fiber Optic Internet": lambda c:
     (
-        "Customer uses Fiber Optic Internet."
-        if c["Internet Service"] == "Fiber Optic"
-        else "Customer does not use Fiber Optic Internet."
+        "Customer uses Fiber Optic Internet service."
+        if c["Internet Service"] == "fiber optic"
+        else "Customer does not use Fiber Optic Internet service."
     ),
 
     "DSL Internet": lambda c:
     (
-        "Customer uses DSL Internet."
-        if c["Internet Service"] == "Dsl"
-        else "Customer does not use DSL Internet."
+        "Customer uses DSL Internet service."
+        if c["Internet Service"] == "dsl"
+        else "Customer does not use DSL Internet service."
     ),
 
     "No Internet Service": lambda c:
@@ -143,7 +143,7 @@ feature_explanations = {
 
     "Multiple Lines": lambda c:( 
     "Customer has multiple phone lines."
-    if c["Multiple Lines"] == "Yes"
+    if c["Multiple Lines"] == "yes"
     else "Customer does not have multiple phone lines."),
 
     "Online Security": lambda c:
