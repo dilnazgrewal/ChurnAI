@@ -52,31 +52,18 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 ```
 customer-churn-prediction/
 │
-├── app.py
-├── requirements.txt
-├── README.md
-├── .gitignore
+├── 📂 model                 # Trained ML pipeline & serialized artifacts
+├── 📂 notebooks             # EDA, preprocessing & model development
+├── 📂 pages                 # Streamlit application pages
+├── 📂 utils                 # Prediction, SHAP & helper modules
 │
-├── model/
-│   ├── customer_churn_pipeline.pkl
-│   ├── threshold.pkl
-│   ├── shap_background.pkl
-│   └── feature_name_mapping.pkl
-│
-├── templates/
-│   ├── index.html
-│   └── result.html
-│
-├── static/
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-├── utils/
-│   ├── shap_utils.py
-│   └── ai_utils.py
-│
-└── notebooks/
+├── 📄 app.py                # Streamlit entry point
+├── 📄 theme.py              # Custom UI theme
+├── 📄 config.toml           # Streamlit configuration
+├── 📄 requirements.txt      # Project dependencies
+├── 📄 README.md             # Project documentation
+├── 📄 .gitignore            # Git ignore rules
+└── 📄 .env                  # Environment variables (excluded from Git)
 ```
 
 ---
