@@ -1,4 +1,5 @@
 import streamlit as st
+import json
 
 THEMES = {
     "dark": {
@@ -49,6 +50,7 @@ def apply(page_title=""):
 
         .stApp {{ background: {c['bg']}; color: {c['title']}; }}
         [data-testid="stHeaderActionElements"] {{ display: none; }}
+        [data-testid="stStatusWidget"] {{ display: none; }}
         header[data-testid="stHeader"] {{ background: transparent; }}
         #MainMenu, footer {{ visibility: hidden; }}
         section[data-testid="stSidebar"] {{ display: none; }}
@@ -114,6 +116,67 @@ def apply(page_title=""):
         .factor .dot {{ width:7px; height:7px; border-radius:50%; background:#2563eb; flex:0 0 auto; }}
         .factor .chk {{ color:#22c55e; font-weight:700; flex:0 0 auto; }}
         .big-num {{ font-size:1.7rem; font-weight:800; color:{c['title']}; margin:.3rem 0 1rem; }}
+
+        /* ---- step cards (Before You Begin) ---- */
+        @keyframes badgeFloat {{ 0%,100% {{ transform:translateY(0) rotate(0deg); }} 50% {{ transform:translateY(-5px) rotate(-4deg); }} }}
+        @keyframes cascadeIn {{ from {{ opacity:0; transform:translateY(28px); }} to {{ opacity:1; transform:none; }} }}
+        .step-card {{ display:flex; gap:1.3rem; align-items:center; background:{c['card_bg']};
+            border:1px solid {c['card_border']}; border-radius:16px; padding:1.4rem 1.6rem; margin-bottom:1rem;
+            position:relative; overflow:hidden; cursor:pointer;
+            transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease, border-color .28s ease;
+            animation:cascadeIn .7s cubic-bezier(.22,1,.36,1) both, fadeUp linear both;
+            animation-timeline:auto, view(); animation-range:auto, entry 0% entry 60%; }}
+        .step-card::before {{ content:''; position:absolute; inset:0; opacity:0; border-radius:16px;
+            background:radial-gradient(500px circle at var(--mx,50%) var(--my,50%), rgba(37,99,235,.14), transparent 55%);
+            transition:opacity .3s ease; pointer-events:none; }}
+        .step-card:hover {{ transform:translateY(-7px) scale(1.012); border-color:#2563eb;
+            box-shadow:0 18px 34px rgba(37,99,235,.18); }}
+        .step-card:hover::before {{ opacity:1; }}
+        .step-card:active {{ transform:translateY(-3px) scale(.995); }}
+        .step-badge {{ width:56px; height:56px; border-radius:50%; flex:0 0 auto; display:flex; align-items:center;
+            justify-content:center; font-size:1.5rem; font-weight:800; color:#fff;
+            background:linear-gradient(135deg,#3b82f6,#1d4ed8); box-shadow:0 8px 18px rgba(37,99,235,.35);
+            animation:badgeFloat 3.4s ease-in-out infinite; }}
+        .step-card .arrow {{ position:absolute; right:1.6rem; top:50%; transform:translate(8px,-50%); opacity:0;
+            color:#3b82f6; font-size:1.3rem; font-weight:800; transition:all .28s ease; }}
+        .step-card:hover .arrow {{ opacity:1; transform:translate(0,-50%); }}
+
+        /* ---- pulsing primary CTA ---- */
+        @keyframes pulseGlow {{ 0%,100% {{ box-shadow:0 0 0 0 rgba(37,99,235,.45); }} 50% {{ box-shadow:0 0 0 10px rgba(37,99,235,0); }} }}
+        div.stButton > button[kind="primary"] {{ animation:pulseGlow 2.2s ease-in-out infinite; }}
+        div.stButton > button[kind="primary"]:active {{ transform:scale(.97); }}
+        div.stButton > button {{ transition:transform .15s ease, box-shadow .2s ease; }}
+        div.stButton > button:active {{ transform:scale(.97); }}
+
+        /* ---- dashboard: KPI tiles + chart panels ---- */
+        .kpi-tile {{ background:{c['card_bg']}; border:1px solid {c['card_border']}; border-radius:16px;
+            padding:1.5rem 1.4rem; text-align:center; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease; }}
+        .kpi-tile:hover {{ transform:translateY(-5px); border-color:#2563eb; box-shadow:0 14px 28px rgba(37,99,235,.15); }}
+        .kpi-label {{ color:{c['sub']}; font-size:.8rem; text-transform:uppercase; letter-spacing:.8px; font-weight:600; margin-bottom:.5rem; }}
+        .kpi-value {{ font-size:2rem; font-weight:800; color:{c['title']}; line-height:1; }}
+        .kpi-delta {{ font-size:.85rem; font-weight:700; margin-top:.5rem; }}
+        .kpi-delta.bad {{ color:#ef4444; }}
+        .kpi-delta.good {{ color:#22c55e; }}
+
+        [data-testid="stVerticalBlockBorderWrapper"] {{ background:{c['card_bg']} !important;
+            border:1px solid {c['card_border']} !important; border-radius:16px !important;
+            padding:.4rem !important; transition:border-color .25s ease; }}
+        [data-testid="stVerticalBlockBorderWrapper"]:hover {{ border-color:#2563eb !important; }}
+        .panel-title {{ font-size:1.12rem; font-weight:700; color:{c['title']}; margin:.5rem .3rem .1rem; }}
+
+        /* ---- insight chips ---- */
+        .insight-strip {{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:0 0 1.6rem; }}
+        @media (max-width:900px) {{ .insight-strip {{ grid-template-columns:1fr; }} }}
+        .insight-chip {{ display:flex; gap:.9rem; align-items:flex-start; background:linear-gradient(135deg, rgba(37,99,235,.08), rgba(37,99,235,.02));
+            border:1px solid rgba(37,99,235,.25); border-radius:14px; padding:1.1rem 1.3rem;
+            transition:transform .25s ease, border-color .25s ease; }}
+        .insight-chip:hover {{ transform:translateY(-4px); border-color:#2563eb; }}
+        .insight-ico {{ font-size:1.3rem; flex:0 0 auto; }}
+        .insight-txt {{ color:{c['title']}; font-size:.93rem; line-height:1.5; }}
+        .insight-txt b {{ color:#3b82f6; }}
+        .insight-line {{ margin-top:.7rem; padding:.55rem .85rem; border-left:3px solid #2563eb;
+            background:rgba(37,99,235,.06); border-radius:6px; font-size:.87rem; color:{c['sub']}; line-height:1.5; }}
+        .insight-line b {{ color:{c['title']}; }}
 
         /* ---- requirement tiles ---- */
         .req-grid {{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.3rem; }}
@@ -216,7 +279,7 @@ def nav(active, c, theme):
     st.markdown(
         f"""
         <div class="navbar">
-            <div class="brand">ChurnAI</div>
+            <div class="brand">AI Churn Intelligence</div>
             <div class="navlinks">
                 <a href="/?theme={theme}"{cls('Home')} target="_self">Home</a>
                 <a href="/Prediction?theme={theme}"{cls('Prediction')} target="_self">Prediction</a>
@@ -228,3 +291,37 @@ def nav(active, c, theme):
         """,
         unsafe_allow_html=True,
     )
+
+
+def loading_screen(c, facts, height=240):
+    """Self-contained animated loader: spinning ring + rotating facts that
+    fade in/out. Everything runs inside its own iframe, so it keeps
+    animating even while the Python script is busy doing real work."""
+    facts_json = json.dumps(facts)
+    html = f"""
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;
+        height:{height}px; font-family:'Poppins',sans-serif;">
+        <div style="width:56px; height:56px; border-radius:50%;
+            border:4px solid {c['card_border']}; border-top-color:#2563eb;
+            animation:spin .85s linear infinite;"></div>
+        <div id="fact-text" style="margin-top:1.5rem; max-width:460px; text-align:center;
+            color:{c['sub']}; font-size:1rem; line-height:1.6; opacity:0; transition:opacity .4s ease;"></div>
+    </div>
+    <style>@keyframes spin {{ to {{ transform:rotate(360deg); }} }}</style>
+    <script>
+        const facts = {facts_json};
+        let i = 0;
+        const el = document.getElementById('fact-text');
+        function showFact() {{
+            el.style.opacity = 0;
+            setTimeout(function() {{
+                el.textContent = "💡 " + facts[i % facts.length];
+                el.style.opacity = 1;
+                i++;
+            }}, 300);
+        }}
+        showFact();
+        setInterval(showFact, 2600);
+    </script>
+    """
+    st.components.v1.html(html, height=height + 20)

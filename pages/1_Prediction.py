@@ -1,10 +1,33 @@
 import streamlit as st
 import pandas as pd
 from utils.explain import explain_prediction
-from theme import apply, nav
+from theme import apply, nav, loading_screen
 
 c, theme = apply("Prediction")
 nav("Prediction", c, theme)
+ 
+# ---------------------------------------------------------------- Warm-up (model + SHAP explainer)
+PREDICTION_FACTS = [
+    "SHAP explains predictions by fairly distributing credit among features — based on game theory.",
+    "Customers with no online security or tech support tend to churn more.",
+    "Retention offers targeted at the first 90 days often see the highest ROI.",
+    "Electronic check payers churn more than customers on automatic billing.",
+    "Month-to-month contracts are consistently the highest-churn segment.",
+]
+ 
+if "model_warmed" not in st.session_state:
+    loader = st.empty()
+    with loader:
+        loading_screen(c, PREDICTION_FACTS)
+
+    from utils.shap_utils import get_pipeline, get_explainer, get_readable_feature_names
+    from utils.prediction import get_threshold
+    get_pipeline()
+    get_explainer()
+    get_readable_feature_names()
+    get_threshold()
+    st.session_state.model_warmed = True
+    loader.empty()
 
 # ---------------------------------------------------------------- Hero (two columns)
 left, right = st.columns([1.15, 0.85], gap="large")
