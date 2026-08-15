@@ -194,28 +194,46 @@ def apply(page_title=""):
         [data-testid="stForm"] {{ background:{c['card_bg']}; border:1px solid {c['card_border']};
             border-radius:16px; padding:1.6rem 1.6rem .8rem; }}
         [data-testid="stWidgetLabel"] p, [data-testid="stForm"] label p {{
-            color:{c['title']} !important; font-weight:600; font-size:.92rem; }}
+            color:{c['title']} !important; font-weight:600; font-size:.92rem; margin-bottom:.35rem; }}
 
-        /* text, number & select fields — force to theme via stable testids */
-        [data-testid="stSelectbox"] div, [data-testid="stNumberInput"] div, [data-testid="stTextInput"] div {{
-            background-color:{c['bg']} !important; border-color:{c['card_border']} !important; }}
+        /* target the actual input box precisely — not every nested div */
+        [data-testid="stSelectbox"] > div > div,
+        [data-testid="stNumberInput"] > div > div,
+        [data-testid="stTextInput"] > div > div {{
+            background-color:{c['card_bg']} !important;
+            border:1px solid {c['card_border']} !important;
+            border-radius:10px !important;
+            min-height:44px;
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }}
+        [data-testid="stSelectbox"] > div > div:hover,
+        [data-testid="stNumberInput"] > div > div:hover,
+        [data-testid="stTextInput"] > div > div:hover {{
+            border-color:#3b82f6 !important;
+        }}
+        [data-testid="stSelectbox"] > div > div:focus-within,
+        [data-testid="stNumberInput"] > div > div:focus-within,
+        [data-testid="stTextInput"] > div > div:focus-within {{
+            border-color:#2563eb !important;
+            box-shadow:0 0 0 3px rgba(37,99,235,.18) !important;
+        }}
         [data-testid="stSelectbox"] *, [data-testid="stNumberInput"] *, [data-testid="stTextInput"] * {{
             color:{c['title']} !important; }}
         [data-testid="stSelectbox"] input, [data-testid="stNumberInput"] input, [data-testid="stTextInput"] input {{
             background:transparent !important; color:{c['title']} !important; }}
         [data-testid="stSelectbox"] svg, [data-testid="stNumberInput"] svg {{ fill:{c['sub']} !important; }}
-        [data-testid="stWidgetLabel"] p {{ color:{c['title']} !important; font-size:1.05rem !important; font-weight:600 !important; }}
 
-        /* number-input stepper buttons (override the generic div rule above) */
+        /* number-input stepper buttons (override the box rule above) */
         [data-testid="stNumberInputStepUp"], [data-testid="stNumberInputStepDown"] {{
-            background:{c['card_bg']} !important; border-color:{c['card_border']} !important; }}
+            background:{c['card_bg']} !important; border-color:{c['card_border']} !important;
+            border-radius:8px !important; }}
         [data-testid="stNumberInputStepUp"] svg, [data-testid="stNumberInputStepDown"] svg {{
             fill:{c['title']} !important; }}
         [data-testid="stNumberInputStepUp"]:hover, [data-testid="stNumberInputStepDown"]:hover {{
             background:rgba(37,99,235,.18) !important; }}
 
         /* dropdown popover (rendered outside the widget) */
-        [data-baseweb="popover"] [role="listbox"] {{ background:{c['card_bg']} !important; border:1px solid {c['card_border']}; }}
+        [data-baseweb="popover"] [role="listbox"] {{ background:{c['card_bg']} !important; border:1px solid {c['card_border']}; border-radius:10px !important; overflow:hidden; }}
         [data-baseweb="popover"] li {{ color:{c['title']} !important; background:{c['card_bg']} !important; }}
         [data-baseweb="popover"] li:hover {{ background:rgba(37,99,235,.15) !important; }}
 
@@ -224,7 +242,7 @@ def apply(page_title=""):
             overflow:hidden; margin-bottom:.9rem; }}
         [data-testid="stExpander"] details {{ background:{c['card_bg']} !important; }}
         [data-testid="stExpander"] summary {{ background:{c['card_bg']} !important; color:{c['title']} !important;
-            font-weight:700 !important; font-size:1.2rem !important; padding:.4rem 0 !important; }}
+            font-weight:700 !important; font-size:1.1rem !important; padding:.4rem 0 !important; }}
         [data-testid="stExpander"] summary * {{ color:{c['title']} !important; }}
         [data-testid="stExpander"] summary:hover, [data-testid="stExpander"] summary:hover * {{ color:#2563eb !important; }}
 

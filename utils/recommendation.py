@@ -22,6 +22,8 @@ def generate_recommendations(churn_probability, risk_factors):
             "No immediate retention intervention is required. Continue regular engagement."
         )
 
+        return recommendations 
+
     # Feature-specific recommendations
     for feature in risk_factors["Feature"]:
 
