@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.explain import explain_prediction
 from theme import apply, nav, loading_screen
+from utils.ai_summary import generate_ai_summary
 
 c, theme = apply("Prediction")
 nav("Prediction", c, theme)
@@ -257,6 +258,13 @@ if st.session_state.get("show_prediction_form"):
                 loading_screen(c, ANALYSIS_FACTS, height=200)
 
             result = explain_prediction(customer)
+            result["ai_summary"] = generate_ai_summary(
+                customer.iloc[0].to_dict(),
+                result["prediction_result"],
+                result["risk_factors"],
+                result["protective_factors"],
+                result["recommendations"],
+            )
             loader.empty()
 
             st.session_state.prediction_result = result
@@ -339,3 +347,19 @@ if "prediction_result" in st.session_state:
         f'<div class="rec-card reveal"><h4>💡 Recommended Actions</h4>{rec_rows}</div>',
         unsafe_allow_html=True,
     )
+
+    if result.get("ai_summary"):
+        summary_html = "".join(
+            f"<p style='margin:0 0 .9rem;'>{para.strip()}</p>"
+            for para in result["ai_summary"].split("\n\n") if para.strip()
+        )
+        st.markdown(
+            f"""
+            <div class="ai-summary-card reveal">
+                <div class="ai-summary-eyebrow">✨ AI Executive Summary</div>
+                <div class="ai-summary-text">{summary_html}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+            

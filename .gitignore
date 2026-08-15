@@ -5,4 +5,6 @@ Telco_customer_churn.xlsx
 data
 images
 test.ipynb
+.streamlit/secrets.toml
+groq
 

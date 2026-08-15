@@ -262,13 +262,20 @@ def apply(page_title=""):
             color:{c['title']}; font-size:1rem; line-height:1.55; }}
         .rec-item .arw {{ color:#3b82f6; font-weight:800; flex:0 0 auto; }}
 
+        .ai-summary-card {{ background:linear-gradient(135deg, rgba(37,99,235,.10), rgba(37,99,235,.02));
+        border:1px solid rgba(37,99,235,.28); border-radius:18px; padding:1.8rem; margin-top:1.4rem;
+        position:relative; overflow:hidden; }}
+        .ai-summary-eyebrow {{ display:inline-flex; align-items:center; gap:.4rem; font-size:.78rem; font-weight:700;
+            letter-spacing:.5px; text-transform:uppercase; color:#3b82f6; margin-bottom:.7rem; }}
+        .ai-summary-text {{ color:{c['title']}; font-size:1.05rem; line-height:1.7; }}
+
         /* ---- how it was built: filters, table, reasoning cards ---- */
         [data-testid="stMultiSelect"] > div > div {{ background-color:{c['bg']} !important; border-color:{c['card_border']} !important; }}
         [data-testid="stMultiSelect"] * {{ color:{c['title']} !important; }}
         [data-testid="stMultiSelect"] span[data-baseweb="tag"] {{ background:#2563eb !important; color:#fff !important; }}
         [data-testid="stMultiSelect"] svg {{ fill:{c['sub']} !important; }}
         [data-testid="stDataFrame"] {{ border:1px solid {c['card_border']} !important; border-radius:14px !important; overflow:hidden; }}
-        
+
         .model-table-wrap {{ overflow-x:auto; border:1px solid {c['card_border']}; border-radius:16px;
             background:{c['card_bg']}; margin:1.2rem 0 .6rem; }}
         .model-table {{ width:100%; border-collapse:collapse; font-size:.93rem; min-width:720px; }}
