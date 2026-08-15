@@ -23,11 +23,13 @@ METRICS = ["accuracy", "precision", "recall", "f1", "roc_auc"]
 METRIC_LABELS = {"accuracy": "Accuracy", "precision": "Precision", "recall": "Recall", "f1": "F1", "roc_auc": "ROC-AUC"}
 best_per_metric = {m: max(r[m] for r in MODEL_RESULTS) for m in METRICS}
 
+# ---------------------------------------------------------------- Hero
 st.markdown(
     """
     <div class="reveal" style="padding-top:.5rem;">
+        <div style="display:inline-block; background:rgba(37,99,235,.15); color:#3b82f6; font-weight:700; font-size:.8rem; padding:.3rem .8rem; border-radius:999px; margin-bottom:1rem;">🔬 Full Model Comparison</div>
         <div class="page-title">How It Was Built</div>
-        <div class="hero-sub" style="margin-bottom:1rem;">
+        <div class="hero-sub" style="margin-bottom:1.6rem;">
             From raw customer data to a deployed, explainable churn model — the dataset, the models
             tested, and the reasoning behind the one that made it into production.
         </div>
@@ -35,6 +37,27 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+HERO_STATS = [
+    ("Models Compared", "4"),
+    ("Experiments Run", "11"),
+    ("Best Accuracy", "80.03%"),
+    ("Explainability", "SHAP"),
+]
+scols = st.columns(4)
+for col, (label, value) in zip(scols, HERO_STATS):
+    with col:
+        st.markdown(
+            f"""
+            <div class="kpi-tile reveal">
+                <div class="kpi-label">{label}</div>
+                <div class="kpi-value">{value}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+st.markdown("<div style='height:1rem;'></div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------------- Dataset
 st.markdown(
