@@ -211,7 +211,7 @@ Beyond SHAP, each prediction also generates an **AI-written retention strategy**
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/customer-churn-prediction.git
+git clone https://github.com/your-username/ChurnAI.git
 ```
 
 Navigate to the project directory:
