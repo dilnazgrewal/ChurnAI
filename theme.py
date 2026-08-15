@@ -27,8 +27,7 @@ def apply(page_title=""):
     st.set_page_config(
         page_title=page_title or "ChurnAI",
         page_icon="🧠",
-        layout="wide",
-        initial_sidebar_state="collapsed",
+        layout="wide"
     )
     # theme is a global preference: a ?theme= param (from the toggle) updates it,
     # otherwise we keep whatever the session already chose (survives navigation).
@@ -262,6 +261,49 @@ def apply(page_title=""):
         .rec-item {{ display:flex; gap:.8rem; align-items:flex-start; padding:.5rem 0;
             color:{c['title']}; font-size:1rem; line-height:1.55; }}
         .rec-item .arw {{ color:#3b82f6; font-weight:800; flex:0 0 auto; }}
+
+        /* ---- how it was built: filters, table, reasoning cards ---- */
+        [data-testid="stMultiSelect"] > div > div {{ background-color:{c['bg']} !important; border-color:{c['card_border']} !important; }}
+        [data-testid="stMultiSelect"] * {{ color:{c['title']} !important; }}
+        [data-testid="stMultiSelect"] span[data-baseweb="tag"] {{ background:#2563eb !important; color:#fff !important; }}
+        [data-testid="stMultiSelect"] svg {{ fill:{c['sub']} !important; }}
+
+        .model-table-wrap {{ overflow-x:auto; border:1px solid {c['card_border']}; border-radius:16px;
+            background:{c['card_bg']}; margin:1.2rem 0 .6rem; }}
+        .model-table {{ width:100%; border-collapse:collapse; font-size:.93rem; min-width:720px; }}
+        .model-table th {{ text-align:left; padding:.9rem 1.1rem; color:{c['sub']}; font-size:.74rem;
+            text-transform:uppercase; letter-spacing:.6px; font-weight:700; border-bottom:1px solid {c['card_border']}; white-space:nowrap; }}
+        .model-table td {{ padding:.8rem 1.1rem; color:{c['title']}; border-bottom:1px solid {c['card_border']}; white-space:nowrap; }}
+        .model-table tr:last-child td {{ border-bottom:none; }}
+        .model-table tbody tr {{ transition:background .15s ease; }}
+        .model-table tbody tr:hover td {{ background:rgba(37,99,235,.07); }}
+        .model-table tr.chosen td {{ background:rgba(37,99,235,.10); font-weight:600; }}
+        .model-table tr.chosen td:first-child {{ border-left:3px solid #2563eb; padding-left:calc(1.1rem - 3px); }}
+        .model-name {{ font-weight:700; }}
+        .variant-pill {{ display:inline-block; font-size:.78rem; padding:.2rem .6rem; border-radius:999px;
+            background:rgba(127,127,127,.14); color:{c['sub']}; }}
+        .chosen-badge {{ display:inline-flex; align-items:center; gap:.35rem; background:#2563eb; color:#fff;
+            font-size:.68rem; font-weight:700; padding:.22rem .6rem; border-radius:999px; margin-left:.55rem;
+            letter-spacing:.3px; text-transform:uppercase; vertical-align:middle; }}
+        .metric-best {{ color:#22c55e; font-weight:700; }}
+
+        .reason-card {{ background:{c['card_bg']}; border:1px solid {c['card_border']}; border-radius:16px;
+            padding:1.5rem; height:100%; transition:transform .25s ease, border-color .25s ease; }}
+        .reason-card:hover {{ transform:translateY(-5px); border-color:#2563eb; }}
+        .reason-card .ico {{ font-size:1.7rem; margin-bottom:.7rem; }}
+        .reason-card h4 {{ color:{c['title']}; font-size:1.05rem; font-weight:700; margin:0 0 .5rem; }}
+        .reason-card p {{ color:{c['sub']}; font-size:.93rem; line-height:1.55; margin:0; }}
+
+        /* pipeline visual (reused from Home) */
+        .pipe {{ display: flex; flex-direction: column; align-items: stretch; }}
+        .node {{ display: flex; align-items: center; gap: 1rem; background: {c['card_bg']};
+            border: 1px solid {c['card_border']}; border-radius: 14px; padding: 1rem 1.3rem; }}
+        .node:hover {{ border-color: #2563eb; }}
+        .node .nico {{ font-size: 1.5rem; width: 2rem; text-align: center; }}
+        .node .nlbl {{ font-weight: 600; color: {c['title']}; font-size: 1.05rem; }}
+        .connector {{ width: 3px; height: 30px; margin: 0 auto; border-radius: 3px;
+            background: linear-gradient(180deg, #2563eb, rgba(37,99,235,.15));
+            background-size: 100% 220%; animation: flowDown 1.4s linear infinite; }}
         </style>
         """,
         unsafe_allow_html=True,
@@ -273,18 +315,17 @@ def nav(active, c, theme):
     """Render the shared top navbar. `active` is the current page label."""
     def cls(label):
         return ' class="active"' if label == active else ""
-    # toggle stays on the current page (flips theme in place, no jump to Home)
-    paths = {"Home": "/", "Prediction": "/Prediction", "Dashboard": "/Dashboard", "About": "/About"}
+    paths = {"Home": "/", "Prediction": "/Prediction", "Dashboard": "/Dashboard", "How It Was Built": "/How_It_Was_Built"}
     here = paths.get(active, "/")
     st.markdown(
         f"""
         <div class="navbar">
-            <div class="brand">AI Churn Intelligence</div>
+            <div class="brand">ChurnAI</div>
             <div class="navlinks">
                 <a href="/?theme={theme}"{cls('Home')} target="_self">Home</a>
                 <a href="/Prediction?theme={theme}"{cls('Prediction')} target="_self">Prediction</a>
                 <a href="/Dashboard?theme={theme}"{cls('Dashboard')} target="_self">Dashboard</a>
-                <a href="/About?theme={theme}"{cls('About')} target="_self">About</a>
+                <a href="/How_It_Was_Built?theme={theme}"{cls('How It Was Built')} target="_self">How It Was Built</a>
                 <a href="{here}?theme={c['switch_to']}" class="theme-toggle" target="_self" title="Switch theme">{c['icon']}</a>
             </div>
         </div>

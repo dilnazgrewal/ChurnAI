@@ -3,8 +3,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Home",
     page_icon="🧠",
-    layout="wide",
-    initial_sidebar_state="collapsed",
+    layout="wide"
 )
 
 THEMES = {
@@ -206,7 +205,7 @@ st.markdown(
             <a href="/?theme={theme}" class="active" target="_self">Home</a>
             <a href="/Prediction?theme={theme}" target="_self">Prediction</a>
             <a href="/Dashboard?theme={theme}" target="_self">Dashboard</a>
-            <a href="/About?theme={theme}" target="_self">About</a>
+            <a href="/How_It_Was_Built?theme={theme}" target="_self">How It Was Built</a>
             <a href="/?theme={c['switch_to']}" class="theme-toggle" target="_self" title="Switch theme">{c['icon']}</a>
         </div>
     </div>
@@ -349,14 +348,14 @@ st.markdown(
         <div class="footer-main">
             <div class="footer-brand">
                 <div class="footer-logo">📈</div>
-                <div class="name">AI Customer Churn Intelligence</div>
+                <div class="name">ChurnAI</div>
             </div>
             <div class="footer-tag">Predict customer churn, understand every prediction, and make smarter retention decisions with explainable AI.</div>
             <div class="footer-nav">
                 <a href="/?theme={theme}" target="_self">Home</a>
                 <a href="/Prediction?theme={theme}" target="_self">Prediction</a>
                 <a href="/Dashboard?theme={theme}" target="_self">Dashboard</a>
-                <a href="/About?theme={theme}" target="_self">About</a>
+                <a href="/How_It_Was_Built?theme={theme}" target="_self">How It Was Built</a>
             </div>
             <div class="socials">
                 <a href="https://github.com/dilnazgrewal" target="_blank" title="GitHub"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.55 0-.28-.01-1-.02-1.97-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.76.12 3.05.74.8 1.18 1.82 1.18 3.08 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.13 0 1.54-.01 2.78-.01 3.16 0 .31.21.67.8.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg></a>
@@ -366,7 +365,7 @@ st.markdown(
         </div>
         <div class="footer-bottom">
             <div class="left"><a href="#">Terms of Use</a><a href="#">Privacy Policy</a></div>
-            <div class="right">© 2026 AI Customer Churn Intelligence · Designed by <a href="https://www.linkedin.com/in/dilnazgrewal05/" target="_blank">Dilnaz Grewal</a></div>
+            <div class="right">© 2026 ChurnAI · Designed by <a href="https://www.linkedin.com/in/dilnazgrewal05/" target="_blank">Dilnaz Grewal</a></div>
         </div>
     </div>
     """,
