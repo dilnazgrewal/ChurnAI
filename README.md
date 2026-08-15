@@ -77,7 +77,7 @@ customer-churn-prediction/
 ├── 📄 requirements.txt         # Project dependencies
 ├── 📄 README.md                # Project documentation
 └── 📄 .gitignore               # Git ignore rules
-
+```
 ---
 
 ## 📊 Dataset
