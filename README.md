@@ -1,6 +1,6 @@
-# 📊 Customer Churn Prediction System
+# 📊 ChurnAI - AI-Powered Customer Churn Intelligence Platform
 
-An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn. The system leverages a **Threshold-Optimized Logistic Regression** model along with **SHAP (SHapley Additive exPlanations)** to provide transparent and interpretable predictions. A Streamlit-based web application allows users to input customer details and receive churn predictions with business-friendly explanations, retention recommendations, and a full interactive business dashboard.
+An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn. The system leverages a **Threshold-Optimized Logistic Regression** model along with **SHAP (SHapley Additive exPlanations)** to provide transparent and interpretable predictions, and an LLM-generated personalized retention strategy for each customer.. A Streamlit-based web application allows users to input customer details and receive churn predictions with business-friendly explanations, retention recommendations, and a full interactive business dashboard.
 
 ## 🚀 Live Demo
 
@@ -19,6 +19,7 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 - Automated preprocessing using a Scikit-learn Pipeline
 - Explainable AI with SHAP — per-prediction risk and protective factors
 - Business-friendly, personalized retention recommendations
+- AI-generated executive summary per prediction — a concrete, personalized retention strategy tailored to each customer's actual profile, powered by an LLM (Groq)
 - Interactive business Dashboard (Plotly) — churn drivers, geographic hotspots, CLTV impact
 - "How It Was Built" page — full model comparison table with filters, dataset preview, and the reasoning behind the final model
 - Dark / light theme toggle
@@ -38,6 +39,9 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 - XGBoost
 - SHAP (explainability)
 - imbalanced-learn (SMOTE / SMOTEENN for class imbalance handling)
+
+### AI Integration
+- Groq API (Llama 3.1) — generates a personalized, business-specific retention strategy per prediction
 
 ### Data Processing
 - Pandas
@@ -67,7 +71,8 @@ customer-churn-prediction/
 │
 ├── 📂 .streamlit/              # Streamlit configuration
 │   └── 📄 config.toml
-│
+│   └── 📄 secrets.toml         # Your own Groq API key never committed (see Installation)
+|
 ├── 📂 data/                    # Public Kaggle dataset
 │
 ├── 📂 model/                   # Trained ML pipeline & serialized artifacts
@@ -98,7 +103,7 @@ The project uses the **IBM Telco Customer Churn Dataset**, a publicly available 
 ## 🖥️ Application Pages
 
 - **Home** — project overview and how a prediction flows end to end
-- **Prediction** — customer intake form, live churn prediction with SHAP-explained risk factors and recommendations
+- **Prediction** — customer intake form, live churn prediction with SHAP-explained risk factors and recommendations, and an AI-generated personalized retention strategy
 - **Dashboard** — business-facing analytics: churn by contract/tenure/payment method, geographic hotspots, CLTV impact
 - **How It Was Built** — full model comparison across every algorithm and optimization strategy tested, a scrollable dataset preview, and the reasoning behind the final model choice
 
@@ -197,6 +202,8 @@ The application uses **SHAP (SHapley Additive exPlanations)** to explain every p
 - Business-friendly interpretation
 - Personalized retention recommendations
 
+Beyond SHAP, each prediction also generates an **AI-written retention strategy** via the Groq API — using the customer's actual profile (contract, tenure, services, spend) to propose a concrete, tailored offer rather than a generic recommendation.
+
 ---
 
 ## 🚀 Installation
@@ -239,6 +246,14 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
+Set up your AI summary API key (optional — the app runs fully without it, the AI Executive Summary card just won't appear):
+
+1. Get a free API key at [console.groq.com](https://console.groq.com)
+2. Create `.streamlit/secrets.toml` in the project root with:
+```toml
+   GROQ_API_KEY = "your-key-here"
+```
+
 Run the application:
 
 ```bash
@@ -253,7 +268,6 @@ http://localhost:8501
 ## 📌 Future Improvements
 
 - Batch customer prediction (CSV upload → bulk scoring)
-- AI-generated executive summaries per prediction
 - REST API support
 - Model monitoring and retraining
 - Authentication system
