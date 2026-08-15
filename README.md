@@ -2,7 +2,13 @@
 
 An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn. The system leverages a **Threshold-Optimized Logistic Regression** model along with **SHAP (SHapley Additive exPlanations)** to provide transparent and interpretable predictions. A Streamlit-based web application allows users to input customer details and receive churn predictions with business-friendly explanations, retention recommendations, and a full interactive business dashboard.
 
-🔗 **[Live Demo](https://your-app-url.streamlit.app)** &nbsp;|&nbsp; 📸 *(add a screenshot or short GIF of the app here)*
+## 🚀 Live Demo
+
+🔗 **[Try the Live Demo](https://your-app-url.streamlit.app)**
+
+## 📸 Dashboard Preview
+
+![ChurnAI Dashboard](assets/dashboard.png)
 
 ---
 
@@ -262,7 +268,7 @@ This project is intended for educational and portfolio purposes.
 
 ## 👨‍💻 Author
 
-**Dilnaz Grewal**
+**Dilnaz Kaur Grewal**
 
 B.Tech Computer Science & Engineering
 Guru Nanak Dev Engineering College
