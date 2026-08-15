@@ -3,13 +3,16 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from theme import apply, nav, loading_screen
+from pathlib import Path
 
 c, theme = apply("Dashboard")
 nav("Dashboard", c, theme)
 
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "Telco_customer_churn.xlsx"
+
 @st.cache_data
 def load_data():
-    return pd.read_excel(r"D:\Desktop\Data_Science_Project\data\Telco_customer_churn.xlsx")
+    return pd.read_excel(DATA_PATH)
 
 DASHBOARD_FACTS = [
     "A 5% increase in customer retention can raise profits by 25–95%.",

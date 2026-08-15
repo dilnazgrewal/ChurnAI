@@ -1,19 +1,23 @@
 # 📊 Customer Churn Prediction System
 
-An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn. The system leverages a **Threshold-Optimized Logistic Regression** model along with **SHAP (SHapley Additive exPlanations)** to provide transparent and interpretable predictions. A Streamlit-based web application allows users to input customer details and receive churn predictions with business-friendly explanations and retention recommendations.
+An end-to-end Machine Learning project that predicts whether a telecom customer is likely to churn. The system leverages a **Threshold-Optimized Logistic Regression** model along with **SHAP (SHapley Additive exPlanations)** to provide transparent and interpretable predictions. A Streamlit-based web application allows users to input customer details and receive churn predictions with business-friendly explanations, retention recommendations, and a full interactive business dashboard.
+
+🔗 **[Live Demo](https://your-app-url.streamlit.app)** &nbsp;|&nbsp; 📸 *(add a screenshot or short GIF of the app here)*
 
 ---
 
 ## 🚀 Features
 
-- Predict customer churn probability
-- Threshold-optimized Logistic Regression model
-- Automated preprocessing using Scikit-learn Pipeline
-- Explainable AI with SHAP
-- Customer-specific churn risk analysis
-- Business-friendly retention recommendations
-- Streamlit-based interactive web application
-- Model serialization using Joblib
+- Predict customer churn probability with risk level
+- Threshold-optimized Logistic Regression model, chosen after comparing 4 algorithms across multiple optimization strategies
+- Automated preprocessing using a Scikit-learn Pipeline
+- Explainable AI with SHAP — per-prediction risk and protective factors
+- Business-friendly, personalized retention recommendations
+- Interactive business Dashboard (Plotly) — churn drivers, geographic hotspots, CLTV impact
+- "How It Was Built" page — full model comparison table with filters, dataset preview, and the reasoning behind the final model
+- Dark / light theme toggle
+- Streamlit-based interactive multi-page web application
+- Model serialization with Joblib
 
 ---
 
@@ -24,20 +28,23 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 
 ### Machine Learning
 - Scikit-learn
-- Logistic Regression
-- SHAP
+- Logistic Regression, Decision Tree, Random Forest
+- XGBoost
+- SHAP (explainability)
+- imbalanced-learn (SMOTE / SMOTEENN for class imbalance handling)
 
 ### Data Processing
 - Pandas
 - NumPy
 
 ### Data Visualization
-- Matplotlib
+- Plotly (in-app interactive charts)
+- Matplotlib / Seaborn (exploratory analysis in notebooks)
 
-### Backend
-- Flask
+### Web Framework
+- Streamlit
 
-### Model Deployment
+### Model Serialization
 - Joblib
 
 ### Development Tools
@@ -49,69 +56,78 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 
 ## 📂 Project Structure
 
-```
 customer-churn-prediction/
 │
-├── 📂 model                 # Trained ML pipeline & serialized artifacts
-├── 📂 notebooks             # EDA, preprocessing & model development
-├── 📂 pages                 # Streamlit application pages
-├── 📂 utils                 # Prediction, SHAP & helper modules
+├── 📂 .streamlit # Streamlit config (theme, client settings)
+│ └── 📄 config.toml
+├── 📂 data # Public Kaggle dataset used by the Dashboard
+├── 📂 model # Trained ML pipeline & serialized artifacts
+├── 📂 notebooks # EDA, preprocessing & model development
+├── 📂 pages # Streamlit application pages
+├── 📂 utils # Prediction, SHAP & helper modules
 │
-├── 📄 app.py                # Streamlit entry point
-├── 📄 theme.py              # Custom UI theme
-├── 📄 config.toml           # Streamlit configuration
-├── 📄 requirements.txt      # Project dependencies
-├── 📄 README.md             # Project documentation
-├── 📄 .gitignore            # Git ignore rules
-└── 📄 .env                  # Environment variables (excluded from Git)
-```
+├── 📄 app.py # Streamlit entry point (Home)
+├── 📄 theme.py # Shared UI theme, navbar & loading screen
+├── 📄 requirements.txt # Project dependencies
+├── 📄 README.md # Project documentation
+└── 📄 .gitignore # Git ignore rules
 
 ---
 
 ## 📊 Dataset
 
-The project uses the **IBM Telco Customer Churn Dataset**, containing customer demographics, subscribed services, billing information, and churn status.
+The project uses the **IBM Telco Customer Churn Dataset**, a publicly available dataset containing customer demographics, subscribed services, billing information, and churn status. It's included directly in this repo under `data/` since it's public — no proprietary or customer data is used. The cleaned/engineered training set and exact preprocessing pipeline used to train the model are kept private.
 
 **Target Variable**
 - Churn Label (Yes / No)
 
 ---
 
+## 🖥️ Application Pages
+
+- **Home** — project overview and how a prediction flows end to end
+- **Prediction** — customer intake form, live churn prediction with SHAP-explained risk factors and recommendations
+- **Dashboard** — business-facing analytics: churn by contract/tenure/payment method, geographic hotspots, CLTV impact
+- **How It Was Built** — full model comparison across every algorithm and optimization strategy tested, a scrollable dataset preview, and the reasoning behind the final model choice
+
+---
+
 ## 🔄 Project Workflow
 
-```
 Customer Data
-      │
-      ▼
+│
+▼
 Data Cleaning
-      │
-      ▼
+│
+▼
 Exploratory Data Analysis
-      │
-      ▼
+│
+▼
 Feature Engineering
-      │
-      ▼
+│
+▼
 Train-Test Split
-      │
-      ▼
+│
+▼
 Model Training
-      │
-      ▼
+│
+▼
 Hyperparameter Tuning
-      │
-      ▼
+│
+▼
+Class Imbalance Handling (SMOTE / SMOTEENN)
+│
+▼
 Threshold Optimization
-      │
-      ▼
+│
+▼
 Pipeline Creation
-      │
-      ▼
+│
+▼
 SHAP Explainability
-      │
-      ▼
+│
+▼
 Streamlit Deployment
-```
 
 ---
 
@@ -131,6 +147,8 @@ Each model was assessed using:
 - SMOTE
 - SMOTEENN
 - Threshold Optimization
+
+The full comparison table across every run is available on the app's **How It Was Built** page.
 
 ---
 
@@ -152,7 +170,7 @@ Each model was assessed using:
 
 Multiple machine learning models, including Logistic Regression, Decision Tree, Random Forest, and XGBoost, were evaluated using baseline training, hyperparameter tuning, resampling techniques (SMOTE/SMOTEENN), and threshold optimization.
 
-Although Threshold-Optimized XGBoost achieved a slightly higher F1-score and ROC-AUC, the improvement was marginal. Threshold-Optimized Logistic Regression delivered comparable predictive performance while offering superior interpretability, computational efficiency, and seamless integration with SHAP for explainable AI. These advantages made it the preferred choice for deployment.
+Although Threshold-Optimized XGBoost achieved a slightly higher F1-score, the improvement was marginal. Threshold-Optimized Logistic Regression delivered the highest accuracy of every run tested, while offering superior interpretability, computational efficiency, and seamless integration with SHAP for explainable AI. These advantages made it the preferred choice for deployment.
 
 ---
 
@@ -182,7 +200,7 @@ Navigate to the project directory:
 cd customer-churn-prediction
 ```
 
-Create a virtual environment (Optional):
+Create a virtual environment (optional):
 
 ```bash
 python -m venv venv
@@ -211,23 +229,19 @@ pip install -r requirements.txt
 Run the application:
 
 ```bash
-python app.py
+streamlit run app.py
 ```
 
-Open your browser and visit:
-
-```
-http://127.0.0.1:5000
-```
+The app will automatically open in your browser, or visit:
+http://localhost:8501
 
 ---
 
 ## 📌 Future Improvements
 
-- Batch customer prediction
-- Customer retention dashboard
+- Batch customer prediction (CSV upload → bulk scoring)
+- AI-generated executive summaries per prediction
 - REST API support
-- Cloud deployment
 - Model monitoring and retraining
 - Authentication system
 
@@ -243,7 +257,7 @@ This project is intended for educational and portfolio purposes.
 
 **Dilnaz Grewal**
 
-B.Tech Computer Science & Engineering  
+B.Tech Computer Science & Engineering
 Guru Nanak Dev Engineering College
 
 ---

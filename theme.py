@@ -267,7 +267,8 @@ def apply(page_title=""):
         [data-testid="stMultiSelect"] * {{ color:{c['title']} !important; }}
         [data-testid="stMultiSelect"] span[data-baseweb="tag"] {{ background:#2563eb !important; color:#fff !important; }}
         [data-testid="stMultiSelect"] svg {{ fill:{c['sub']} !important; }}
-
+        [data-testid="stDataFrame"] {{ border:1px solid {c['card_border']} !important; border-radius:14px !important; overflow:hidden; }}
+        
         .model-table-wrap {{ overflow-x:auto; border:1px solid {c['card_border']}; border-radius:16px;
             background:{c['card_bg']}; margin:1.2rem 0 .6rem; }}
         .model-table {{ width:100%; border-collapse:collapse; font-size:.93rem; min-width:720px; }}

@@ -1,10 +1,10 @@
 import streamlit as st
 from theme import apply, nav
-
+from pathlib import Path
+import pandas as pd
 c, theme = apply("How It Was Built")
 nav("How It Was Built", c, theme)
 
-# ---------------------------------------------------------------- Data
 MODEL_RESULTS = [
     {"model": "Logistic Regression", "variant": "Baseline",                  "accuracy": 0.7967, "precision": 0.6279, "recall": 0.5775, "f1": 0.6017, "roc_auc": 0.8447},
     {"model": "Logistic Regression", "variant": "Hyperparameter Tuned",      "accuracy": 0.7946, "precision": 0.6246, "recall": 0.5695, "f1": 0.5958, "roc_auc": 0.8443},
@@ -23,7 +23,6 @@ METRICS = ["accuracy", "precision", "recall", "f1", "roc_auc"]
 METRIC_LABELS = {"accuracy": "Accuracy", "precision": "Precision", "recall": "Recall", "f1": "F1", "roc_auc": "ROC-AUC"}
 best_per_metric = {m: max(r[m] for r in MODEL_RESULTS) for m in METRICS}
 
-# ---------------------------------------------------------------- Hero
 st.markdown(
     """
     <div class="reveal" style="padding-top:.5rem;">
@@ -85,6 +84,21 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "Telco_customer_churn.xlsx"
+
+@st.cache_data
+def load_raw_preview():
+    return pd.read_excel(DATA_PATH)
+
+st.markdown('<div class="panel-title" style="margin-top:1.6rem;">Raw Dataset Preview</div>', unsafe_allow_html=True)
+
+try:
+    preview_df = load_raw_preview()
+    st.caption(f"{len(preview_df):,} rows × {preview_df.shape[1]} columns — scroll to explore, exactly as sourced from Kaggle.")
+    st.dataframe(preview_df, use_container_width=True, height=420)
+except FileNotFoundError:
+    st.info("Dataset file not found — check DATA_PATH above matches your project's data/ folder.")
 
 # ---------------------------------------------------------------- Model comparison
 st.markdown(

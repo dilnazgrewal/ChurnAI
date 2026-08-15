@@ -244,9 +244,20 @@ if st.session_state.get("show_prediction_form"):
 
             }])
 
-            with st.spinner("Analyzing customer..."):
+            ANALYSIS_FACTS = [
+                "Running the customer's profile through the trained classification pipeline...",
+                "Computing the churn probability and risk level...",
+                "Generating SHAP values to explain what's driving this prediction...",
+                "Identifying the top risk and protective factors...",
+                "Turning the model output into a clear business recommendation...",
+            ]
 
-                result = explain_prediction(customer)
+            loader = st.empty()
+            with loader:
+                loading_screen(c, ANALYSIS_FACTS, height=200)
+
+            result = explain_prediction(customer)
+            loader.empty()
 
             st.session_state.prediction_result = result
 
