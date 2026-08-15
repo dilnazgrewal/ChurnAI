@@ -100,6 +100,7 @@ The project uses the **IBM Telco Customer Churn Dataset**, a publicly available 
 
 ## 🔄 Project Workflow
 
+```text
 Customer Data
 │
 ▼
@@ -134,7 +135,7 @@ SHAP Explainability
 │
 ▼
 Streamlit Deployment
-
+```
 ---
 
 ## 🤖 Models Evaluated
