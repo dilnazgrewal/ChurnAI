@@ -56,21 +56,27 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 
 ## 📂 Project Structure
 
+```text
 customer-churn-prediction/
 │
-├── 📂 .streamlit # Streamlit config (theme, client settings)
-│ └── 📄 config.toml
-├── 📂 data # Public Kaggle dataset used by the Dashboard
-├── 📂 model # Trained ML pipeline & serialized artifacts
-├── 📂 notebooks # EDA, preprocessing & model development
-├── 📂 pages # Streamlit application pages
-├── 📂 utils # Prediction, SHAP & helper modules
+├── 📂 .streamlit/              # Streamlit configuration
+│   └── 📄 config.toml
 │
-├── 📄 app.py # Streamlit entry point (Home)
-├── 📄 theme.py # Shared UI theme, navbar & loading screen
-├── 📄 requirements.txt # Project dependencies
-├── 📄 README.md # Project documentation
-└── 📄 .gitignore # Git ignore rules
+├── 📂 data/                    # Public Kaggle dataset
+│
+├── 📂 model/                   # Trained ML pipeline & serialized artifacts
+│
+├── 📂 notebooks/               # EDA, preprocessing & model development
+│
+├── 📂 pages/                   # Streamlit application pages
+│
+├── 📂 utils/                   # Prediction, SHAP & helper modules
+│
+├── 📄 app.py                   # Streamlit entry point
+├── 📄 theme.py                 # Shared UI theme, navbar & loading screen
+├── 📄 requirements.txt         # Project dependencies
+├── 📄 README.md                # Project documentation
+└── 📄 .gitignore               # Git ignore rules
 
 ---
 
