@@ -4,7 +4,7 @@ An end-to-end Machine Learning project that predicts whether a telecom customer 
 
 ## 🚀 Live Demo
 
-🔗 **[Try the Live Demo](https://your-app-url.streamlit.app)**
+🔗 **[Try the Live Demo](https://churnai-churn-intelligence-platform.streamlit.app/)**
 
 ## 📸 Dashboard Preview
 
