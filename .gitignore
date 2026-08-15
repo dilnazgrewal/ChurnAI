@@ -1,8 +1,7 @@
 .env
 data_cleaned.xlsx
-Telco_customer_churn.xlsx
+data_cleaned_featured.xlsx
 **/__pycache__/
-data
 images
 test.ipynb
 .streamlit/secrets.toml
