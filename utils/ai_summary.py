@@ -1,7 +1,7 @@
 import streamlit as st
 from groq import Groq
 
-MODEL = "llama-3.1-8b-instant"
+MODEL = "openai/gpt-oss-20b"
 
 def _client():
     api_key = st.secrets.get("GROQ_API_KEY") if hasattr(st, "secrets") else None
@@ -69,7 +69,8 @@ Your tone and recommendation MUST match the {risk_level} risk level stated above
         response = client.chat.completions.create(
             model=MODEL,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=600,
+            max_tokens=2000,
+            reasoning_effort="low",
             temperature=0.55,
             timeout=15,
         )
